@@ -1,0 +1,13 @@
+local index = require "index.index"
+
+local M = {}
+
+function M.on_build_started(opts)
+    index.create()
+end
+
+function M.on_bundle_started(opts)
+    index.create()
+end
+
+return M

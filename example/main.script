@@ -1,0 +1,100 @@
+local index = require "index.index"
+
+-- example: iterate list
+local function iterate_list(list)
+	for _, v in pairs(list) do
+		if index.is_folder(v) then
+			print("found folder:  ", v)
+		elseif index.is_file(v) then
+			print("    found file:", v)
+		end
+	end
+end
+
+-- example: iterate tree
+local function iterate_tree(tree)
+	for k, v in pairs(tree) do
+		if index.is_folder(v) then
+			print("found folder:  ", k)
+			iterate_tree(v)
+		elseif index.is_file(v) then
+			print("    found file:", k, "in path:", v)
+		end
+	end
+end
+
+-- example: iterate folder
+local function iterate_folder(folder)
+	for key, value in pairs(folder) do
+		if index.is_folder(value) then
+			print("character " .. key)
+			for name, path in pairs(index.get_folder_files(value)) do
+				print("    " .. name .. "  =  " .. path)
+			end
+		end
+	end
+end
+
+
+
+function init(self)
+	local list = index.get_list()
+	print("-------- Get index list: \nindex.get_list()")
+	pprint(list)
+
+	local files = index.get_list_files()
+	print("-------- Get files: \nindex.get_list_files()")
+	pprint(files)
+
+	local folders = index.get_list_folders()
+	print("-------- Get folders: \nindex.get_list_folders()")
+	pprint(folders)
+
+	local tree = index.get_tree()
+	print("-------- Get tree: \nindex.get_tree()")
+	pprint(tree)
+
+	local files_from_path = index.get_list_files("assets/images")
+	print('-------- Get files from path: \nindex.get_files("assets/images")')
+	pprint(files_from_path)
+
+	local folder = index.get_folder("assets")
+	print('-------- Get folder from path: \nindex.get_folder("assets")')
+	pprint(folder)
+
+	local root = index.get_folder()
+	print("-------- Get folder root: \nindex.get_folder()")
+	pprint(root)
+
+	local folder_files = index.get_folder_files("assets")
+	print('-------- Get folder (only files): \nindex.get_folder_files("assets")')
+	pprint(folder_files)
+
+	local folder_folders = index.get_folder_folders("assets")
+	print('-------- Get folder (only folders): \nindex.get_folder_folders("assets")')
+	pprint(folder_folders)
+
+	local tree_from_path = index.get_tree("assets/images/characters")
+	print('-------- Get tree from path: \nindex.get_tree("assets/images/characters")')
+	pprint(tree_from_path)
+
+	local list_i = index.get_list()
+	print("-------- Example iterate list:")
+	iterate_list(list_i)
+
+	local tree_i = index.get_tree()
+	print("-------- Example iterate tree:")
+	iterate_tree(tree_i)
+
+	local folder_i = index.get_folder_folders("assets/images/characters")
+	print("-------- Example iterate folder:")
+	iterate_folder(folder_i)
+
+	print("-------- Other functions:")
+	print(index.is_file_indexed("assets/data.txt"))
+	print(index.is_file_indexed("assets/unknown.txt"))
+	print(index.is_file_indexed("assets/images"))
+	print(index.find_file("data.txt"))
+	print(index.find_file("stand.txt"))
+	print(index.find_file("stand.txt", "assets/images/characters/healer"))
+end
