@@ -1,3 +1,6 @@
+--- A Lua module for Defold to access file operations from editor scripts.
+-- by Halfstar
+
 local M = {}
 
 local SEP = package.config:sub(1,1) or "/"

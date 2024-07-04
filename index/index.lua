@@ -1,4 +1,5 @@
---- A lua module for Defold to automacitally create an index of custom resources, and to load that index.
+--- A Lua module for Defold to automacitally create an index of custom resources, and to load that index.
+-- by Halfstar
 
 local dir = require "index.dir"
 
